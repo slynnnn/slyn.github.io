@@ -1,0 +1,173 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PC版微信双开/多开的方法（这可能是最简单粗暴高效的解决方案，新手小白也能学会） | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="PC版微信双开/多开的方法（这可能是最简单粗暴高效的解决方案，新手小白也能学会） | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="首先确保没有登录任何微信，如果已有登录的微信，先彻底退出程序。 ...
+点击桌面任意空白处， 使微信图标不被选中。
+此时按住键盘上的回车键不放，同时鼠标左键点击微信图标，即可同时打开很多个登录窗口，觉得数量够了就放开回车键。
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              PC版微信双开/多开的方法（这可能是最简单粗暴高效的解决方案，新手小白也能学会）
+            </h2>
+            <div class="post-info">
+              <span>
+                07-21-2022
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>首先确保没有登录任何微信，如果已有登录的微信，先彻底退出程序。 ...<br>
+点击桌面任意空白处， 使微信图标不被选中。<br>
+此时按住键盘上的回车键不放，同时鼠标左键点击微信图标，即可同时打开很多个登录窗口，觉得数量够了就放开回车键。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/x-ui-mian-ban-da-jian-jiao-xue-ling-ji-chu-bao-mu-ji-/">
+              <h3 class="post-title">
+                x-ui面板搭建教学-零基础保姆级-
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

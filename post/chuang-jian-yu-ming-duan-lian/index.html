@@ -1,0 +1,306 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>创建域名短链 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="创建域名短链 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="前言：很久以前见到有大佬使用这样的短链，比如https://a.com/12短链可以跳转到自定义的https://example.com/123456789这样的长链接来，感觉很酷。网上也有提供这样的短链服务，那么如何自己搭建这样的网页服务..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              创建域名短链
+            </h2>
+            <div class="post-info">
+              <span>
+                06-25-2022
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>前言：很久以前见到有大佬使用这样的短链，比如<code>https://a.com/12</code>短链可以跳转到自定义的<code>https://example.com/123456789</code>这样的长链接来，感觉很酷。网上也有提供这样的短链服务，那么如何自己搭建这样的网页服务呢？</p>
+<!--more-->
+<p>本文介绍使用<code>YOURLS/YOURLS</code>这个github开源项目来搭建此服务，搭建前需要你先部署好<code>lamp</code>建站环境，还有什么好说的呢，推荐：<a href="https://lamp.sh" title="点击访问">LAMP一键安装包-秋水逸冰</a>。</p>
+<p>环境要求如下：</p>
+<ul>
+<li>Apache（httpd），版本：<strong>2.4</strong>及以上，需要启用<code>mod_rewrite</code>模块</li>
+<li>PHP：版本<strong>7.4</strong>及以上</li>
+<li>MySQL：<strong>5.0</strong>及以上或者MariaDB：<strong>10.0</strong>及以上</li>
+</ul>
+<h2 id="1-使用lamp添加站点">1、使用lamp添加站点</h2>
+<p>执行下面命令前，请确保你已用lamp建站脚本配置好网站环境。添加网站参考：<a href="https://lamp.sh/faq.html" title="点击访问">LAMP常见问题</a>里面的建站流程：</p>
+<pre><code>lamp add //添加站点命令
+
+&gt;输入域名：a.com
+
+&gt;选择网站目录：使用默认的/data/www/a.com就可以
+
+&gt;输入网站管理邮箱（好像这个用处不大）：admin@a.com
+
+&gt;提示是否创建用户名跟数据库名一致的数据库：
+可以选yes：它会要求你输入用户名（默认和数据库名相同），之后用户密码
+也可以选no：它默认跳过此步骤，不会创建数据库也不会创建新用户，选择此项需要你自己会创建数据库，一般选择上面的yes，让脚本帮忙创建
+
+&gt;提示是否配置ssl证书，这里就不展开讲了，个人一般先配置好了，指定绝对路径就行了
+
+&gt;提示是否配置重定向，看个人选择，开启的话，脚本会帮忙在网站根目录下创建一个.htaccess隐藏文件
+
+## 添加站点大功告成，下面就是上传网站程序
+</code></pre>
+<h2 id="2-配置网站程序代码">2、配置网站程序代码</h2>
+<p>lamp脚本创建的网站默认路径是<code>/data/www/a.com</code>，下面切换到此路径下，用wget下载网站程序即可：</p>
+<pre><code># 切换路径，请将a.com替换为你自己的域名
+cd /data/www/a.com
+
+# 下载网站程序，目前YOURLS最新稳定版本是1.9
+wget https://github.com/YOURLS/YOURLS/archive/refs/tags/1.9.tar.gz
+
+# 解压
+tar -zxf 1.9.tar.gz
+
+# （必选）移动解压后的所有文件到（当前）网站根目录
+mv YOURLS-1.9/* .
+
+# （可选）删除无用压缩包和空文件夹
+rm -rf 1.9.tar.gz YOURLS-1.9
+
+# 递归修改网站目录所有者和所属组
+chown -R apache:apache /data/www/a.com
+</code></pre>
+<blockquote>
+<p>网站程序发布地址是：<a href="https://github.com/YOURLS/YOURLS/releases" title="点击访问">发布地址</a></p>
+</blockquote>
+<h2 id="3-配置configphp数据库等信息">3、配置config.php数据库等信息</h2>
+<p><code>YOURLS</code>网站程序使用此<code>config.php</code>文件配置数据库及网站信息：</p>
+<pre><code>cd /data/www/a.com/user //切换目录
+cp config-sample.php config.php //拷贝一份，命名为config.php
+vim config.php //需要对此文件进行修改配置数据库等信息（里面都有注释说明）
+------------------------
+define('YOURLS_DB_USER', 'root'); //指定mysql用户名，我这里以root为例，实际情况下不要用root，请新建用户并在此处指定
+define('YOURLS_DB_PASS', 'rootpassword'); //指定MySQL下root用户的管理密码，实际情况下请不要使用此密码，请配置你创建的新用户的密码
+define('YOURLS_DB_NAME', 'dbname_for_yourls'); //这里指定你打算给此程序使用的数据库名，需要保证你上面指定的用户对它具有完全可操作权限
+define('YOURLS_DB_HOST', 'localhost'); //这里是指定你mysql装的主机位置，一般默认是localhost，除非你数据库跟当前服务器不在一个服务器上
+define('YOURLS_DB_PREFIX', 'yourls_'); //保持默认即可，这是指定网站程序在你的数据库下新建表的前缀
+
+define('YOURLS_SITE', 'http://a.com'); //这里是指定你网站地址，修改为自己的域名
+define('YOURLS_LANG', 'zh_CN'); //网站支持汉化，这里先修改为zh_CN，下面会介绍修改方法，留空默认是English
+define('YOURLS_UNIQUE_URLS', true); //保持唯一，设置为false及允许不同的短链指向同一个长链
+define('YOURLS_PRIVATE', true); //保护http://a.com/admin管理界面，设置为false表示公开，true代表私用
+define('YOURLS_COOKIEKEY','xxxxx') //这个需要浏览器里访问 http://yourls.org/cookie ，然后把对应的值拷贝到此替换xxxxx即可，不需要记住这个，但需要保证它足够长和足够复杂
+$yourls_user_passwords = [
+	'username' =&gt; 'password_for_username'
+]; //这是指定登陆/admin界面使用的用户名和密码，这里先配置明文，后面网站跑起来之后，密码会被加密，不用担心泄露问题
+...下面的不用修改了
+-------------------------
+</code></pre>
+<blockquote>
+<p>访问 http://yourls.org/cookie 获取cookie值，填入上方配置文件中</p>
+</blockquote>
+<p>修改完<code>config.php</code>文件后，重载配置：<code>httpd -k graceful</code>即可，现在可以访问<code>http://a.com/admin</code>网站了，如果你配置了tls证书，那么访问<code>https://a.com/admin</code>即可。</p>
+<figure data-type="image" tabindex="1"><img src="https://shiping.date/usr/uploads/2022/05/3869281560.png" alt="yourls登陆界面.png" loading="lazy"></figure>
+<h2 id="4-给网站汉化">4、给网站汉化</h2>
+<p>根据文档说明：<a href="https://docs.yourls.org/guide/extend/languages.html#available-languages" title="点击访问">LANGUAGES-YOURLS Documentation</a></p>
+<p>需要先在<code>/data/www/a.com/user/languages/</code>目录下放两个文件，比如我们想使用简体中文，对应<code>zh_CN</code>，那么两个文件名为<code>zh_CN.mo</code>和<code>zh_CN.po</code>，然后需要修改第3步的<code>config.php</code>文件，其中一行<code>define('YOURLS_LANG', 'zh_CN');</code>，上面配置此文件时已指定，那么现在就不用再修改了：</p>
+<pre><code># 切换路径
+cd /data/www/a.com/user/languages
+
+# 下载两个文件
+wget https://github.com/ZvonimirSun/YOURLS-zh_CN/raw/master/zh_CN.mo
+wget https://github.com/ZvonimirSun/YOURLS-zh_CN/raw/master/zh_CN.po
+
+# 修改所有者和所属组
+chown apache:apache ./zh_CN.mo ./zh_CN.po
+
+# 让Apache优雅地重载配置，现在再访问http://a.com/admin管理界面，会发现已经有中文界面
+httpd -k graceful
+</code></pre>
+<blockquote>
+<p>汉化语言包下载地址：<a href="https://github.com/ZvonimirSun/YOURLS-zh_CN" title="点击访问">项目地址</a></p>
+</blockquote>
+<figure data-type="image" tabindex="2"><img src="https://shiping.date/usr/uploads/2022/05/1510361672.png" alt="yourls管理界面.png" loading="lazy"></figure>
+<p>到此，即算完成了所有配置，使用方法自行研究即可。</p>
+<h2 id="5-可选数据库添加用户配置权限等命令">5、（可选）数据库添加用户配置权限等命令</h2>
+<p>如果有安装<code>phpmyadmin</code>那么使用它就可以很方便的配置，如果没有安装，那么以<code>root</code>身份登陆到<code>MySQL</code>后，使用下面命令配置也行：</p>
+<pre><code># 新建数据库，假定数据库名为db_for_yourls
+create database db_for_yourls; //回车
+
+# 新建数据库后，可以查看
+show databases; //回车
+
+# 新建用户，用户名假定是username，密码是password，那么命令如下
+create user 'username'@'localhost' identified with mysql_native_password by 'password'; //回车
+
+# 授予username用户对数据库db_for_yourls下所有表的操作权限
+grant all privileges on db_for_yourls.* to 'username'@'localhost'; //回车
+
+# 刷新权限
+flush privileges; //回车
+
+# 显示所有用户，其实它在自带数据库mysql下面的user表里
+select host,user,plugin,authentication_string from mysql.user; //回车
+</code></pre>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://github.com/YOURLS/YOURLS" title="点击访问">YOURLS项目地址</a></li>
+<li><a href="https://docs.yourls.org/guide/introduction.html#requirements" title="点击访问">YOURLS文档地址</a></li>
+<li><a href="https://lamp.sh" title="点击访问">LAMP一键脚本-秋水逸冰</a></li>
+<li><a href="https://github.com/ZvonimirSun/YOURLS-zh_CN" title="点击访问">YOURLS网站程序汉化地址</a></textarea></div>        </div></li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8lamp%E6%B7%BB%E5%8A%A0%E7%AB%99%E7%82%B9">1、使用lamp添加站点</a></li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E7%BD%91%E7%AB%99%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81">2、配置网站程序代码</a></li>
+<li><a href="#3-%E9%85%8D%E7%BD%AEconfigphp%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AD%89%E4%BF%A1%E6%81%AF">3、配置config.php数据库等信息</a></li>
+<li><a href="#4-%E7%BB%99%E7%BD%91%E7%AB%99%E6%B1%89%E5%8C%96">4、给网站汉化</a></li>
+<li><a href="#5-%E5%8F%AF%E9%80%89%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E6%9D%83%E9%99%90%E7%AD%89%E5%91%BD%E4%BB%A4">5、（可选）数据库添加用户配置权限等命令</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/bao-ta-da-jian-wordpress-jian-li-shu-ju-ku-lian-jie-shi-chu-cuo-jie-jue-fang-fa/">
+              <h3 class="post-title">
+                宝塔搭建WordPress建立数据库连接时出错解决方法
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>yt-dlp工具教程-Windows环境，基于命令行的方式下载视频 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="yt-dlp工具教程-Windows环境，基于命令行的方式下载视频 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="
+段落1、需求描述
+虽然，市面上已经有很多在线网站，支持在线解析Youtube/ Tiktok/ Twitter等视频网站的视频，但是调用这类网站，会在对方的服务器有访问记录
+故而，一些支持本地下载的工具，就是比较推荐的
+最出名的就是you..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              yt-dlp工具教程-Windows环境，基于命令行的方式下载视频
+            </h2>
+            <div class="post-info">
+              <span>
+                02-24-2020
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <figure data-type="image" tabindex="1"><img src="https://blog.lzd.me/usr/uploads/2022/05/2498304419.png" alt="yt-dlp工具教程" loading="lazy"></figure>
+<p><strong>段落1、需求描述</strong></p>
+<p>虽然，市面上已经有很多在线网站，支持在线解析Youtube/ Tiktok/ Twitter等视频网站的视频，但是调用这类网站，会在对方的服务器有访问记录</p>
+<p>故而，一些支持本地下载的工具，就是比较推荐的</p>
+<p>最出名的就是youtube-dl项目</p>
+<p>在前些篇章的教程中，已经给大家介绍了youtube-dl工具，下载youtube视频列表</p>
+<p>目前版本的youtube-dl工具，无法支持Tiktok，但其分支版本yt-dlp，支持下载TikTok的视频，今天就给大家说一下用法</p>
+<p>项目地址 yt-dlp 工具 https://github.com/yt-dlp/yt-dlp</p>
+<p>必要的ffmpeg工具 https://www.ffmpeg.org/download.html</p>
+<p><strong>段落2、TikTok下载实例</strong></p>
+<p>支持TikTok主域名，支持分享链接</p>
+<p>以如下的视频为例子，给大家说明一下用法<br>
+<img src="https://blog.lzd.me/usr/uploads/2022/05/1569136097.png" alt="tiktok" loading="lazy"></p>
+<p><em>点分享，可以得到，视频地址如下</em><br>
+https://www.tiktok.com/@gunayaksoyofficial/video/7097488392484556038?is_from_webapp=1&amp;sender_device=pc</p>
+<p><em>其中</em><br>
+视频实际地址 https://www.tiktok.com/@gunayaksoyofficial/video/7097488392484556038<br>
+其他参数 ?is_from_webapp=1&amp;sender_device=pc</p>
+<p><strong>Linux环境下载，推荐具备ffmpeg，apt-get install ffmpeg</strong><br>
+下载命令如下:</p>
+<pre><code>./yt-dlp https://www.tiktok.com/@gunayaksoyofficial/video/7097488392484556038
+</code></pre>
+<p><strong>Windows环境，下载windows的版本的yt-dlp.exe和ffmpeg.exe到一个目录下</strong></p>
+<p>https://github.com/yt-dlp/yt-dlp/releases/download/2022.05.18/yt-dlp.exe</p>
+<p>https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z</p>
+<p>下载命令是一致的，如下</p>
+<pre><code>.\yt-dlp.exe https://www.tiktok.com/@gunayaksoyofficial/video/7097488392484556038
+</code></pre>
+<p><strong>段落3、其他</strong></p>
+<p>如果，要自定义名称，可以跟youtube-dl一样，通过-o参数指定视频的名称</p>
+<p>如果是在windows上用youtube-dl工具，也是下载对应的windows版本到这个目录下。</p>
+<p><strong>段落4、堪误记录</strong></p>
+<p>4.1 yt-dlp 里面字母p的含义，可能不是python，而是plus，增强化的版本的意思。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

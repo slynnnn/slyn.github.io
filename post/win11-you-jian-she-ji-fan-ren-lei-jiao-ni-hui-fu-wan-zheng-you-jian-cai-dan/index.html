@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Win11右键设计反人类？教你恢复完整右键菜单 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Win11右键设计反人类？教你恢复完整右键菜单 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="微软已经在10月5日发布了Windows 11正式版，很多朋友也已经升级了。不过对于Win11的一些新设计，并不是所有人都能适应的，例如新的右键快捷菜单，就不少朋友表示接受不了。Win11的新右键菜单相比之前的旧款式，颜值上的确大有提升，不..." />
+    <meta name="keywords" content="windows" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Win11右键设计反人类？教你恢复完整右键菜单
+            </h2>
+            <div class="post-info">
+              <span>
+                07-12-2022
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://diss.dev/tag/6WPmyrMe_W/" class="post-tag">
+                  # windows
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>微软已经在10月5日发布了Windows 11正式版，很多朋友也已经升级了。不过对于Win11的一些新设计，并不是所有人都能适应的，例如新的右键快捷菜单，就不少朋友表示接受不了。<img src="https://pic1.zhimg.com/50/v2-9deb4229fa8dc739580a9aa194fbee76_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="411" data-rawheight="383" data-default-watermark-src="https://pica.zhimg.com/50/v2-973c4f234e2672b46a4b55dfa94c785e_720w.jpg?source=1940ef5c" class="content_image" width="411"/>Win11的新右键菜单相比之前的旧款式，颜值上的确大有提升，不仅使用了Fluent Design设计语言，而且优化了文字排版，行间距更宽，便于阅读和触控。然而，Win11的右键菜单隐藏了很多选项，如果想要找到一些常用的功能，需要点击“显示更多选项”才能展开，这操作起来颇为麻烦。怎么办？今天就来给大家分享一些恢复Win11完整右键菜单的方法！<img src="https://pic1.zhimg.com/50/v2-3f0d6c9759db0fff8741c0895d539320_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="620" data-rawheight="399" data-default-watermark-src="https://pic1.zhimg.com/50/v2-bef11898fc267882f970fe42e3964e5f_720w.jpg?source=1940ef5c" class="origin_image zh-lightbox-thumb" width="620" data-original="https://pica.zhimg.com/v2-3f0d6c9759db0fff8741c0895d539320_r.jpg?source=1940ef5c"/>一、使用注册表修改首先，通过修改注册表，我们就可以将Win11的右键菜单改为老样式。下面是具体的方法。·运行“regedit”，开启注册表编辑器，定位到“HKEY_CURRENT_USER\SOFTWARE\CLASSES\CLSID”；·接着，右键点击“CLSID”键值，新建一个名为{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}的项；·右键点击新创建的项，新建一个名为InprocServer32的项，按下回车键保存；·最后选择新创建的项，然后双击右侧窗格中的默认条目，什么内容都不需要输入，按下回车键。保存注册表后，重启explorer.exe，即可看到右键菜单恢复成旧样式了。如果想要恢复成为Win11的设计，那么删掉InprocServer32的项就可以了。二、使用软件修改注册表的操作比较复杂，没有经验的朋友容易出错，藉此我们也可以利用一些软件进行修改。例如这款“Windows 11 Classic Context Menu”。Windows 11 Classic Context Menu：https://www.sordum.org/14479/windows-11-classic-context-menu-v1-0/Windows 11 Classic Context Menu的原理是和上文修改注册表的方法一样的，只不过它将这些步骤封装成为了一个绿色小软件，点击一下就可以修改注册表，实现同样的功效。<img src="https://pica.zhimg.com/50/v2-b730c0a76171067ba3ce379a6fd9b507_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="620" data-rawheight="440" data-default-watermark-src="https://pic1.zhimg.com/50/v2-2787aafe48d001de8312634ce3a63d47_720w.jpg?source=1940ef5c" class="origin_image zh-lightbox-thumb" width="620" data-original="https://pic1.zhimg.com/v2-b730c0a76171067ba3ce379a6fd9b507_r.jpg?source=1940ef5c"/>下载Windows 11 Classic Context Menu后，打开则可以看到三个选项，分别对应“经典右键菜单”、“默认右键菜单”和“重启explorer.exe”。大家只需要点击切换菜单样式后，再点击重启Explorer，就可以自由切换经典的菜单样式，和Win11默认的菜单样式了。<img src="https://pica.zhimg.com/50/v2-6a58a0badd6ab69f3d8c7d65a34bef14_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="620" data-rawheight="550" data-default-watermark-src="https://pica.zhimg.com/50/v2-820aa3e67a1784b2d5b67288ff9be48c_720w.jpg?source=1940ef5c" class="origin_image zh-lightbox-thumb" width="620" data-original="https://pic4.zhimg.com/v2-6a58a0badd6ab69f3d8c7d65a34bef14_r.jpg?source=1940ef5c"/>总结总的来说，Win11的一些设计的确引起了争议，除了右键菜单外，开始菜单和任务栏也有很多朋友表示难以适应。不过这些总有办法解决，之后我们还会介绍更多相关方法，来给用户更多切换会原先经典设计的选择。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/office365-deng-lu-xian-shi-cuo-wu-dai-ma-0x80190001/">
+              <h3 class="post-title">
+                Office365登陆显示错误代码 0x80190001
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

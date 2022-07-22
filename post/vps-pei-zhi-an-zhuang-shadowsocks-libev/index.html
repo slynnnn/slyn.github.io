@@ -1,0 +1,391 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VPS配置安装shadowsocks-libev | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="VPS配置安装shadowsocks-libev | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="前言：虽然shadowsocks-libev已经很久没更新了，Github里标识为Bug-fix-only，但就目前使用情况来讲，貌似还属它最稳。由于需要手动编译安装，稍有难度，这里记录下编译过程。
+
+本文以Debian10发行版为例，介绍..." />
+    <meta name="keywords" content="vps" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              VPS配置安装shadowsocks-libev
+            </h2>
+            <div class="post-info">
+              <span>
+                06-25-2022
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://diss.dev/tag/Kn8UUTmHG/" class="post-tag">
+                  # vps
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>前言：虽然<code>shadowsocks-libev</code>已经很久没更新了，Github里标识为<code>Bug-fix-only</code>，但就目前使用情况来讲，貌似还属它最稳。由于需要手动编译安装，稍有难度，这里记录下编译过程。</p>
+<!--more-->
+<p>本文以<code>Debian10</code>发行版为例，介绍两种方法配置<code>shadowsocks-libev</code>，一种是使用源代码编译安装，一种是使用<code>teddysun/shadowsocks-libev:3.3.5</code>这版还带<code>simple-obfs</code>插件的docker镜像配置。</p>
+<h1 id="一-编译安装">一、编译安装</h1>
+<h2 id="11-安装必要软件">1.1 安装必要软件</h2>
+<p>以<code>root</code>用户执行下面命令：</p>
+<pre><code># 更新源
+apt update
+
+# 安装必要软件（编译使用，运行依赖）
+apt -y install git vim gettext build-essential autoconf libtool libpcre3-dev libev-dev libc-ares-dev automake libmbedtls-dev libsodium-dev
+</code></pre>
+<h2 id="12-下载ss-libev源码">1.2 下载ss-libev源码</h2>
+<p>一般将源码放置在<code>/usr/local/src</code>目录下，执行下面命令：</p>
+<pre><code># 切换路径
+cd /usr/local/src
+
+# 下载shadowsocks-libev源码压缩包
+wget https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.5/shadowsocks-libev-3.3.5.tar.gz
+
+# 解压
+tar -zxf shadowsocks-libev-3.3.5.tar.gz
+
+# 删除压缩包（可选）
+rm shadowsocks-libev-3.3.5.tar.gz
+
+# 修改所有者（可选）
+chown -R root.root shadowsocks-libev-3.3.5
+</code></pre>
+<blockquote>
+<p>shadowsocks-libev 发布地址是：<a href="https://github.com/shadowsocks/shadowsocks-libev/releases" title="点击打开">点击打开</a></p>
+</blockquote>
+<h2 id="13-编译安装">1.3 编译安装</h2>
+<p>由于是C语言编写的程序，还需<code>configure</code>一下：</p>
+<pre><code># 切换路径
+cd shadowsocks-libev-3.3.5
+
+# 执行configure，生成Makefile文件
+./configure --disable-documentation
+
+# 编译
+make
+
+# 安装（二进制默认放在/usr/local/bin下，因为上面configure时没有具体指定安装路径）
+make install
+</code></pre>
+<h2 id="14-配置simple-obfs插件">1.4 配置simple-obfs插件</h2>
+<p><code>simple-obfs</code>的发布里没有源码压缩包，这里需要<code>git clone</code>源代码下来：</p>
+<pre><code># 安装必要软件
+apt install -y libssl-dev
+
+# 克隆项目仓库到vps上
+cd /usr/local/src &amp;&amp; git clone https://github.com/shadowsocks/simple-obfs.git
+
+# 切换路径，初始化
+cd simple-obfs &amp;&amp; git submodule update --init --recursive
+
+# 执行自动生成脚本
+./autogen.sh
+
+# 执行configure，生成Makefile文件
+./configure --disable-documentation
+
+# 编译
+make
+
+# 安装
+make install
+</code></pre>
+<p><strong>说明</strong>：上面1.3和1.4命令执行完以后，<code>ss-*</code>和<code>obfs-*</code>二进制都会默认安装到<code>/usr/local/bin</code>目录下。</p>
+<h2 id="15-创建配置文件">1.5 创建配置文件</h2>
+<p>配置文件一般放在<code>/etc/shadowsocks-libev</code>目录下，但这个目录vps默认并不存在，需要手动创建：</p>
+<pre><code># 创建目录，并切换至此
+mkdir /etc/shadowsocks-libev &amp;&amp; cd /etc/shadowsocks-libev
+
+# 创建配置文件
+vim config.json
+
+# 下面是配置文件内容示例
+{
+	&quot;server&quot;:&quot;0.0.0.0&quot;,
+	&quot;server_port&quot;:9000,
+	&quot;password&quot;:&quot;password0&quot;,
+	&quot;timeout&quot;:300,
+	&quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;,
+	&quot;nameserver&quot;:&quot;8.8.8.8&quot;,
+	&quot;fast_open&quot;:false,
+	&quot;mode&quot;:&quot;tcp_and_udp&quot;,
+	&quot;plugin&quot;:&quot;obfs-server&quot;,
+	&quot;plugin_opts&quot;:&quot;obfs=http&quot;
+}
+</code></pre>
+<p><strong>说明</strong>：如果你的机器是<code>ipv4</code>和<code>ipv6</code>双栈接入，那么你可以同时监听所有的<code>ipv4和ipv6</code>地址，具体写法是：<code>&quot;server&quot;:[&quot;[::0]&quot;,&quot;0.0.0.0&quot;]</code></p>
+<h2 id="16-配置systemd服务">1.6 配置systemd服务</h2>
+<p>上面分别配置好了二进制和配置文件，下面配置systemd来管理其服务的启动，停止，自启动：</p>
+<pre><code># 切换路径
+cd /etc/systemd/system
+
+# 创建服务文件
+vim shadowsocks-libev.service
+
+# 下面是内容示例
+[Unit]
+Description=Shadowsocks-libev
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/local/bin/ss-server -c /etc/shadowsocks-libev/config.json
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>配置好systemd服务以后，执行下面命令：</p>
+<pre><code># 重载（修改service文件后，一般要执行下面命令）
+systemctl daemon-reload
+
+# 启动
+systemctl start shadowsocks-libev
+
+# 加入开机启动
+systemctl enable shadowsocks-libev
+
+# 查看运行状态
+systemctl status shadowsocks-libev
+
+# 停止
+systemctl stop shadowsocks-libev
+</code></pre>
+<h1 id="二-用docker配置">二、用docker配置</h1>
+<h2 id="21-安装docker">2.1 安装docker</h2>
+<p>以<code>root</code>用户执行下面命令安装<code>docker</code>：</p>
+<pre><code># 使用一键脚本安装docker
+wget -qO- get.docker.com | bash
+
+# 启动
+systemctl start docker
+
+# 开机自启
+systemctl enable docker
+
+# 查看状态
+systemctl status docker
+</code></pre>
+<h2 id="22-拉取镜像">2.2 拉取镜像</h2>
+<p>由于<code>simple-obfs</code>插件项目已经好久好久没更新，在github里也标识为<code>Deprecated</code>被弃用，因此本来是不推荐使用的，秋水逸冰在新版docker镜像中也移除了对此插件的支持，因此要用旧版的<code>teddysun/shadowsocks-libev:3.3.5</code>，且用且珍惜：</p>
+<pre><code># 拉取镜像（3.3.5是tag，必须加上，否则默认是latest，不含simple-obfs插件）
+docker pull teddysun/shadowsocks-libev:3.3.5
+
+# 查看obfs插件版本号
+docker run --rm teddysun/shadowsocks-libev:3.3.5 obfs-server -h
+</code></pre>
+<h2 id="23-创建配置文件">2.3 创建配置文件</h2>
+<p>跟上面<code>1.5</code>一模一样：</p>
+<pre><code># 创建目录，并切换至此
+mkdir /etc/shadowsocks-libev &amp;&amp; cd /etc/shadowsocks-libev
+
+# 创建配置文件
+vim config.json
+
+# 下面是配置文件内容示例
+{
+	&quot;server&quot;:&quot;0.0.0.0&quot;,
+	&quot;server_port&quot;:9000,
+	&quot;password&quot;:&quot;password0&quot;,
+	&quot;timeout&quot;:300,
+	&quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;,
+	&quot;nameserver&quot;:&quot;8.8.8.8&quot;,
+	&quot;fast_open&quot;:false,
+	&quot;mode&quot;:&quot;tcp_and_udp&quot;,
+	&quot;plugin&quot;:&quot;obfs-server&quot;,
+	&quot;plugin_opts&quot;:&quot;obfs=http&quot;
+}
+</code></pre>
+<h2 id="24-基于配置文件启动容器">2.4 基于配置文件启动容器</h2>
+<p>执行下面命令创建并启动容器即可：</p>
+<pre><code># 启动容器
+docker run -d --name ss-libev --restart always --net host -v /etc/shadowsocks-libev:/etc/shadowsocks-libev teddysun/shadowsocks-libev:3.3.5
+
+# 查看logs
+docker logs ss-libev
+
+# 重启容器（一般在修改config.json后执行重启）
+docker restart ss-libev
+
+# 停止容器运行
+docker stop ss-libev
+
+# 移除容器
+docker rm ss-libev
+</code></pre>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://github.com/shadowsocks/shadowsocks-libev" title="Shadowsocks-libev项目地址">Shadowsocks-libev项目地址</a></li>
+<li><a href="https://github.com/shadowsocks/simple-obfs" title="simple-obfs项目地址">simple-obfs项目地址</a></li>
+<li><a href="https://teddysun.com/536.html" title="秋水逸冰-介绍几款Docker镜像">秋水逸冰-介绍几款Docker镜像</a></textarea></div></li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85">一、编译安装</a>
+<ul>
+<li><a href="#11-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6">1.1 安装必要软件</a></li>
+<li><a href="#12-%E4%B8%8B%E8%BD%BDss-libev%E6%BA%90%E7%A0%81">1.2 下载ss-libev源码</a></li>
+<li><a href="#13-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85">1.3 编译安装</a></li>
+<li><a href="#14-%E9%85%8D%E7%BD%AEsimple-obfs%E6%8F%92%E4%BB%B6">1.4 配置simple-obfs插件</a></li>
+<li><a href="#15-%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">1.5 创建配置文件</a></li>
+<li><a href="#16-%E9%85%8D%E7%BD%AEsystemd%E6%9C%8D%E5%8A%A1">1.6 配置systemd服务</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%94%A8docker%E9%85%8D%E7%BD%AE">二、用docker配置</a>
+<ul>
+<li><a href="#21-%E5%AE%89%E8%A3%85docker">2.1 安装docker</a></li>
+<li><a href="#22-%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">2.2 拉取镜像</a></li>
+<li><a href="#23-%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2.3 创建配置文件</a></li>
+<li><a href="#24-%E5%9F%BA%E4%BA%8E%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">2.4 基于配置文件启动容器</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/chuang-jian-yu-ming-duan-lian/">
+              <h3 class="post-title">
+                创建域名短链
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

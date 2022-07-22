@@ -1,0 +1,225 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Youtube-dl教程之下载视频列表 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Youtube-dl教程之下载视频列表 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="
+P1、需求描述
+一些冷门的视频，BT下载，迅雷下载，都不给力，而在Youtube 、Pornhub这些视频大网站上却有备份，故而，下载整个视频列表的需求
+这次教程，还是以youtube-dl工具为主。有钱的土豪们，建议尝试IDM工具，好用..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Youtube-dl教程之下载视频列表
+            </h2>
+            <div class="post-info">
+              <span>
+                07-23-2020
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <figure data-type="image" tabindex="1"><img src="https://blog.lzd.me/usr/uploads/2022/05/2498304419.png" alt="utbdl" loading="lazy"></figure>
+<p><strong>P1、需求描述</strong></p>
+<p>一些冷门的视频，BT下载，迅雷下载，都不给力，而在Youtube 、Pornhub这些视频大网站上却有备份，故而，下载整个视频列表的需求</p>
+<p>这次教程，还是以youtube-dl工具为主。有钱的土豪们，建议尝试IDM工具，好用，但是我这里没有购买授权，做盗版软件的使用说明，还是有点撒不开面子。</p>
+<p><strong>P2、下载安装youtube-dl工具</strong></p>
+<p>youtube-dl工具的安装基本一条命令，但是，其基于python的环境，需要有ffmpeg的转码套件。</p>
+<pre><code>root@server:~# apt-get update
+
+root@server:~# apt-get install python3 
+   
+root@server:~# apt-get install ffmpeg
+
+root@server:~# wget -O /usr/bin/youtube-dl  https://youtube-dl.org/downloads/latest/youtube-dl
+
+root@server:~# chmod +x /usr/bin/youtube-dl
+
+root@server:~# ln -s /usr/bin/python3 /usr/bin/python   # 可选，若无/usr/bin/python，则执行
+</code></pre>
+<p><strong>P3、下载Youtube视频列表</strong></p>
+<p>本次视频，以下载Youtube平台，“奥特曼官方中文频道”里面的泰迦奥特曼的播放列表为例，做下载整个Youtube视频列表的操作示范</p>
+<p>随意点开一集，如第一集，可以看到它的地址<br>
+https://www.youtube.com/watch?v=u2Cf9E0aVsA&amp;list=PL6YzOVgBYcEZSB30tzuXeSAhNX3nwu4Wd</p>
+<p>从地址栏，可以看到它的list数值为 PL6YzOVgBYcEZSB30tzuXeSAhNX3nwu4Wd</p>
+<p>整个播放列表为</p>
+<pre><code>https://www.youtube.com/watch?v=cyR6qEL80cY&amp;list=PL1L7vAupvFPPcU4jnP9G8LgxXKFVVx6X9
+</code></pre>
+<p>下载参数为</p>
+<pre><code>/usr/bin/youtube-dl -f best[ext=mp4] -k -c -i  https://www.youtube.com/playlist?list=PL6YzOVgBYcEZSB30tzuXeSAhNX3nwu4Wd
+</code></pre>
+<p>参数释义<br>
+-f 选择格式为最优的mp4格式<br>
+-k 保存文件<br>
+-c 断点续传<br>
+-i 忽略错误</p>
+<p><strong>P4、常见错误-部分文件未下载完</strong></p>
+<p>假设，服务器上，下载视频，还有如下5集没有下载完，可根据视频列表的序号，进行下载</p>
+<pre><code>/usr/bin/youtube-dl -f best[ext=mp4] -k -c -i --playlist-items 8,15,20,23 https://www.youtube.com/playlist?list=PL6YzOVgBYcEZSB30tzuXeSAhNX3nwu4Wd
+</code></pre>
+<p>参数释义<br>
+--playlist-items 8,15,20,23  指定仅下载播放列表中的8,15,20,23这几集视频</p>
+<p><strong>P5、常见错误-名称太长</strong></p>
+<p>一般使用原始的参数，会出现，保存视频文件到本地时候，文件名称过长，我这里通过指定output参数，已经实现了缩短文件名称的长度，一般不会再有这个报错</p>
+<pre><code>-o / --output 保存到本地的文件名称
+
+--output 'TJ_%(id)s.%(ext)s'  泰迦拼音首字母缩写 + 视频的ID号 + 格式(.mp4)
+
+整体命令为
+/usr/bin/youtube-dl -f best[ext=mp4] -k -c -i --output 'TJ_%(id)s.%(ext)s' https://www.youtube.com/playlist?list=PL6YzOVgBYcEZSB30tzuXeSAhNX3nwu4Wd
+</code></pre>
+<p><strong>P6、常见问题，下载速度慢</strong></p>
+<p>正常的呦，基本上单线程就这样的速度，大概100KB/s，如果要快速的，建议，还是使用可以多线程下载的工具，如IDM之类的。</p>
+<p><strong>P7、常见问题、曲艺类节目、仅下载Youtube视频中的音频</strong></p>
+<p>如下为下载歌曲，陈奕迅 – 爱情转移，到mp3格式</p>
+<pre><code>youtube-dl -x --audio-format mp3 https://www.youtube.com/watch?v=Sm_EGqzs2aA
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/ru-he-shi-yong-dai-li-wei-zhuang-dao-quan-qiu-ge-guo/">
+              <h3 class="post-title">
+                如何使用代理，伪装到全球各国
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

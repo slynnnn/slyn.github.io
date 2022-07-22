@@ -1,0 +1,206 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基于CloudFlare自定义域名邮箱收邮件 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基于CloudFlare自定义域名邮箱收邮件 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="前言：CloudFlare在2021年9月份推出了邮件转发功能的测试，目前登陆CloudFlare控制后台即可直接使用。
+
+简单来讲，就是你有个域名example.com已经交给cloudflare托管，现在你可以在cloudflare后台..." />
+    <meta name="keywords" content="CloudFlare,mail,domain" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              基于CloudFlare自定义域名邮箱收邮件
+            </h2>
+            <div class="post-info">
+              <span>
+                07-08-2022
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://diss.dev/tag/x8E-GYaO3/" class="post-tag">
+                  # CloudFlare
+                </a>
+              
+                <a href="https://diss.dev/tag/trFrwOTZUm/" class="post-tag">
+                  # mail
+                </a>
+              
+                <a href="https://diss.dev/tag/jw3CbaeE6c/" class="post-tag">
+                  # domain
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>前言：<code>CloudFlare</code>在2021年9月份推出了邮件转发功能的测试，目前登陆<code>CloudFlare</code>控制后台即可直接使用。</p>
+<!--more-->
+<p>简单来讲，就是你有个域名<code>example.com</code>已经交给cloudflare托管，现在你可以在cloudflare后台基于此域名创建一个域名邮箱<code>test@example.com</code>，并绑定响应的后端目标地址<code>xxx@gmail.com</code>。你可以将这个域名邮箱公开，所有发送至<code>test@example.com</code>的邮件都会经由cloudflare处理转发到你的<code>xxx@gmail.com</code>收件箱。</p>
+<p>具体操作步骤可参考下图：</p>
+<ul>
+<li><strong>添加自定义域名邮箱并绑定后端邮箱地址</strong></li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://shiping.date/usr/uploads/2022/03/1768576886.png" alt="自定义域名邮箱.png" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>首次添加完一个自定义域名邮箱并绑定目标邮箱后，<code>CloudFlare</code>会给你的后端目标邮箱发送邮件，需要给个确认，点击确认就好</strong>：<br>
+<img src="https://shiping.date/usr/uploads/2022/03/3113012581.png" alt="确认邮箱.png" loading="lazy"></p>
+</li>
+<li>
+<p><strong>点击确认以后，回到<code>CloudFlare</code>控制台，一键添加推荐的dns记录，分为<code>mx</code>和<code>txt</code>两种类型</strong>：<br>
+<img src="https://shiping.date/usr/uploads/2022/03/1523361501.png" alt="自动添加解析记录.png" loading="lazy"></p>
+</li>
+</ul>
+<p>上面所有步骤完成以后，可以用你的qq邮箱给你的<code>test@example.com</code>发送邮件试试，登陆<code>xxx@gmail.com</code>收件箱，看能否收到转发来的邮件。</p>
+<p>值得注意的是，自定义域名邮箱数量貌似不受限制，<code>CloudFlare</code>也声称此项服务安全私密，它并不会查看或者储存你的邮件内容，只是提供邮件转发服务。</p>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://hosthum.com/p/cloudflare-email-routing/" title="Cloudflare 推出邮件转发功能">Cloudflare 推出邮件转发功能</a></li>
+<li><a href="https://blog.cloudflare.com/zh-cn/introducing-email-routing-zh-cn/" title="博客：使用 Cloudflare 电子邮件路由轻松创建和路由电子邮件地址">博客：使用 Cloudflare 电子邮件路由轻松创建和路由电子邮件地址</a></textarea></div></li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/ru-he-zai-zhong-guo-shi-yong-netflixornetflix-ru-men-zhi-nan/">
+              <h3 class="post-title">
+                如何在中国使用 Netflix｜Netflix 入门指南🧭
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>宝塔搭建WordPress建立数据库连接时出错解决方法 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="宝塔搭建WordPress建立数据库连接时出错解决方法 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="相信很多 WordPress 网站站长都遇到过“建立数据库连接时出错”的错误提示。我之前在管理一个 WordPress 网站的时候，就隔三差五遇到这个错误提示，真的是让人非常的苦恼。那么，产生这个错误的原因究竟是什么呢？
+
+建立数据库连接时..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              宝塔搭建WordPress建立数据库连接时出错解决方法
+            </h2>
+            <div class="post-info">
+              <span>
+                06-24-2022
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>相信很多 WordPress 网站站长都遇到过“建立数据库连接时出错”的错误提示。我之前在管理一个 WordPress 网站的时候，就隔三差五遇到这个错误提示，真的是让人非常的苦恼。那么，产生这个错误的原因究竟是什么呢？<br>
+<img src="https://blog.lzd.me/usr/uploads/2022/06/3441308241.jpg" alt="建立数据库连接时出错" loading="lazy"><br>
+<strong>建立数据库连接时出错原因</strong></p>
+<blockquote>
+<p>登录信息有误。WordPress 需要 Mysql 用户名和密码才能访问网站数据库。如果用户登录信息出现错误，那么 WordPress<br>
+将无法与数据库建立连接。</p>
+<p>WordPress 文件损坏。如果程序更新升级失败，可能会导致 WordPress<br>
+核心文件损坏。如果插件和主题更新失败，也可能导致这种错误的发生。</p>
+<p>数据库损坏。可能是由于恶意插件损坏了数据库、遭遇黑客的攻击、主题发生错误等等。</p>
+<p>Mysql数据库服务器关闭。比如服务器性能受限，系统超负载运行，造成数据库崩溃。这对于使用轻量服务器的用户来说，很可能是这种原因。因为我之前使用的就是阿里云轻量服务器，老是出现建立数据库连接时出错。</p>
+<p>访问量过大。服务器瞬时访问量过大，数据库因流量过大而无响应。</p>
+</blockquote>
+<p><strong>重启MySQL数据库</strong></p>
+<p>一 ：如果安装了宝塔面板</p>
+<blockquote>
+<p>第 1 步：登录宝塔面板，在宝塔面板左侧菜单中选择 “软件商店”。</p>
+</blockquote>
+<blockquote>
+<p>第 2 步：在打开的页面中找到“MySQL” ，然后点击右侧的“设置”按钮。</p>
+<p>第 3 步：如果此时 MySQL 处于停止状态，就表示之前数据库服务器已经关闭。</p>
+<p>第 4 步：然后重新启动 MySQL 数据库。</p>
+<p>第 5 步：重新访问 WordPress 网站，网站已经恢复正常状态。</p>
+</blockquote>
+<p>二 ：Linux服务器未安装宝塔面板<br>
+如果未安装宝塔面板，那么我们首先需要通过 Xhell 或其他 SSH 工具连接服务器。然后通过命令行输入命令，重新启动 MySQL 数据库。可以参考：<a href="https://www.niuqi360.com/linux/restart-mysql-in-windows-and-linux/">如何在 Windows 和 Linux 上重启 MySQL 数据库服务器</a></p>
+<p><strong>避免出现数据库连接错误</strong></p>
+<p>升级服务器</p>
+<blockquote>
+<p>如果 wp-config.php 配置的数据库信息正确，仍然反复出现“建立数据库连接时出错”的问题。那么很有可能是服务器配置过低，导致MySQL 数据库服务器崩溃。如果想从根本上解决该问题，建议升级服务器配置。</p>
+</blockquote>
+<p>设置虚拟内存</p>
+<blockquote>
+<p>如果暂时无法升级服务器配置，那么我们可以先通过创建虚拟内存（swap分区）的方法，缓解服务器配置压力。虚拟内存的作用是在服务器的物理内存不够用的时候，把硬盘的一部分空间作为虚拟内存，以供当前运行的程序使用的技术。本人之前频繁遇到数据库连接错误的问题，就是通过这种方法暂时处理的。<a href="https://www.google.com/search?q=%E5%88%9B%E5%BB%BAswap%E5%88%86%E5%8C%BA&amp;ei=FcahYv-GCNr0-QaU6ZO4BA&amp;ved=0ahUKEwi_5f_Fj6D4AhVaet4KHZT0BEcQ4dUDCA4&amp;uact=5&amp;oq=%E5%88%9B%E5%BB%BAswap%E5%88%86%E5%8C%BA&amp;gs_lcp=Cgdnd3Mtd2l6EAMyBggAEB4QBTIGCAAQHhAFOgcIABBHELADOgYIABAeEAc6CAgAEB4QDxAHOgUIABCABDoECAAQDToICAAQHhAPEA06CAgAEB4QDRAFSgQIQRgASgQIRhgAUKYTWNAyYN40aAZwAXgCgAG8AogBphiSAQgwLjE4LjAuMZgBAKABAcgBCsABAQ&amp;sclient=gws-wiz">详见参考</a>！！</p>
+</blockquote>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/typecho-zhan-dian-pei-zhi-wei-jing-tai/">
+              <h3 class="post-title">
+                typecho站点配置伪静态
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

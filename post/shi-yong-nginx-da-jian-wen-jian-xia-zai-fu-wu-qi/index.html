@@ -1,0 +1,292 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>使用nginx搭建文件下载服务器 | 表酱紫</title>
+<link rel="shortcut icon" href="https://diss.dev/favicon.ico?v=1658464120813">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://diss.dev/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="使用nginx搭建文件下载服务器 | 表酱紫 - Atom Feed" href="https://diss.dev/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KL7J9YT996"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KL7J9YT996');
+</script>
+
+
+    <meta name="description" content="前言：估计很多喜欢折腾的朋友手里都有不少vps和域名，只是可惜的是，好多都拿来吃灰了。vps有一个比较大的优势就是：地处机房，网络带宽足，我们完全可以利用这点下（合规）bt/种子资源，然后服务端安装相应的媒体服务器比如plex，jellyf..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://diss.dev">
+  <img class="avatar" src="https://diss.dev/images/avatar.png?v=1658464120813" alt="">
+  </a>
+  <h1 class="site-title">
+    表酱紫
+  </h1>
+  <p class="site-description">
+    复杂的世界里一个就足够了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              使用nginx搭建文件下载服务器
+            </h2>
+            <div class="post-info">
+              <span>
+                03-13-2022
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>前言：估计很多喜欢折腾的朋友手里都有不少vps和域名，只是可惜的是，好多都拿来吃灰了。vps有一个比较大的优势就是：地处机房，网络带宽足，我们完全可以利用这点下（合规）bt/种子资源，然后服务端安装相应的媒体服务器比如<code>plex</code>，<code>jellyfin</code>来使用它，我们甚至可以用<code>caddy</code>或者<code>nginx</code>网页端在线看下好的视频，扯远了......</p>
+<!--more-->
+<p>本文介绍一种方法，让你的vps派上用场，你可以拿它做文件共享。具体实现目标是：让你可以通过访问<code>https://example.com</code>来访问相应目录下的文件，可查看可下载，并且你可以给这个访问设置一个访问验证。</p>
+<p>准备条件：</p>
+<ul>
+<li>一个域名，证书可使用Cloudflare提供的</li>
+<li>一台有公网IP的VPS服务器</li>
+<li>一台方便操作的本地电脑</li>
+</ul>
+<h2 id="一-获取etcnginx压缩包">一、获取/etc/nginx压缩包</h2>
+<p>执行下面命令前，你需要先安装好<code>docker</code>，这里不再赘述安装方法：</p>
+<pre><code># 拉取nginx镜像
+docker pull nginx:stable
+
+# 先创建一个nginx容器，选/root/nginx为映射目录
+docker run -d \
+	--name nginx \
+	--net host \
+	-v /root/nginx:/root/nginx \
+	nginx:stable
+
+# 进入容器，执行操作
+docker exec -it nginx bash
+
+# 切换到/etc/目录，将/etc/nginx打包，并拷贝到/root/nginx目录下
+cd /etc/ &amp;&amp; tar -zcf nginx.tar.gz ./nginx/ &amp;&amp; cp nginx.tar.gz /root/nginx/
+
+#退出容器（回到宿主机shell环境）
+exit
+
+# 移除容器
+docker rm -f nginx
+</code></pre>
+<h2 id="二-创建密钥文本文件">二、创建密钥文本文件</h2>
+<p>上面移除容器后，宿主机<code>/root/nginx</code>目录下仍然存在<code>nginx.tar.gz</code>的压缩包，下面进行解压，并进行一系列相关操作：</p>
+<pre><code># 将压缩包解压到/etc/目录下
+tar -zxf /root/nginx/nginx.tar.gz -C /etc/
+
+# 切换路径
+cd /etc/nginx/conf.d
+
+# 利用nginx内置的openssl创建标准密文
+docker run --rm nginx:stable openssl passwd -crypt password
+# 假设下面是命令结束输出的密文，那么这意味着当你使用admin:9nL8bmgcoY5HY 作为密钥文本内容时，
+# 你的nginx登录用户名和密码分别是admin和password，实际密码以加密的形式存在了服务端文本中
+9nL8bmgcoY5HY
+
+# 创建密钥文本
+echo admin:9nL8bmgcoY5HY &gt; ./httppasswd
+</code></pre>
+<h2 id="三-修改defaultconf文件">三、修改default.conf文件</h2>
+<p>本文默认不修改<code>/etc/nginx/nginx.conf</code>主配置文件，只在<code>/etc/nginx/conf.d</code>目录下进行相关操作：</p>
+<pre><code># 重命名
+mv ./default.conf ./default.conf.bak
+
+# 创建目录
+mkdir html log
+
+# vim site.conf
+//下面是配置文件样例
+server {
+	listen 80;
+	server_name example.com; # 这里输入你的域名
+
+	location / {
+		return 301 https://example.com$request_uri; # 将http重定向到https
+	}
+}
+
+server {
+	listen 443 ssl;
+	server_name example.com; # 这里填域名
+	access_log /etc/nginx/conf.d/log/access.log;
+	error_log /etc/nginx/conf.d/log/error.log；
+
+	ssl_certificate /etc/nginx/conf.d/cf.crt; #把证书和key重命名后放到此目录下
+	ssl_certificate_key /etc/nginx/conf.d/cf.key;
+	ssl_session_timeout 5m;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4；
+
+	location / {
+		root /etc/nginx/conf.d/html;
+		index index.html index.htm;
+		autoindex on; # 开启索引
+		autoindex_exact_size off; # 不显示确切大小
+		autoindex_localtime on;
+		auth_basic 'Restricted';
+		auth_basic_user_file /etc/nginx/conf.d/httppasswd;# 这里指定上面一步生成的密钥文本
+	}
+}
+//上面是配置文件样例
+</code></pre>
+<h2 id="四-创建容器">四、创建容器</h2>
+<pre><code>vim run_nginx.sh
+
+//下面是样例
+#!/bin/bash
+docker run -d \
+	--name nginx \
+	--restart always \
+	--net host \
+	-v /etc/nginx:/etc/nginx \
+	nginx:stable
+//上面是样例
+
+# 执行此文件，每次需要重新建容器，执行此命令即可
+bash run_nginx.sh
+</code></pre>
+<p><strong>参考链接</strong>：</p>
+<ul>
+<li><a href="https://blog.csdn.net/as3luyuan123/article/details/14917959" title="OpenSSL命令---passwd">OpenSSL命令---passwd</a></li>
+<li><a href="https://blog.csdn.net/guang11cheng/article/details/60965294" title="用nginx搭建简单的文件下载服务器">用nginx搭建简单的文件下载服务器</a></li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E8%8E%B7%E5%8F%96etcnginx%E5%8E%8B%E7%BC%A9%E5%8C%85">一、获取/etc/nginx压缩包</a></li>
+<li><a href="#%E4%BA%8C-%E5%88%9B%E5%BB%BA%E5%AF%86%E9%92%A5%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6">二、创建密钥文本文件</a></li>
+<li><a href="#%E4%B8%89-%E4%BF%AE%E6%94%B9defaultconf%E6%96%87%E4%BB%B6">三、修改default.conf文件</a></li>
+<li><a href="#%E5%9B%9B-%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8">四、创建容器</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://diss.dev/post/youtube-premium-ding-yue-zhi-nan-zui-bian-yi-mei-yue-zhi-yao-2-yuan/">
+              <h3 class="post-title">
+                YouTube Premium 订阅指南，最便宜每月只要2元💰
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://diss.dev" target="_blank"> slyn</a>
+  <a class="rss" href="https://diss.dev/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
