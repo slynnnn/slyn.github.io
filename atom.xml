@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://diss.one</id>
+    <id>https://aoki.one</id>
     <title>表酱紫 </title>
     <updated>2023-11-08T04:59:43.560Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://diss.one"/>
-    <link rel="self" href="https://diss.one/atom.xml"/>
+    <link rel="alternate" href="https://aoki.one"/>
+    <link rel="self" href="https://aoki.one/atom.xml"/>
     <subtitle>复杂的世界 一个就够了</subtitle>
-    <logo>https://diss.one/images/avatar.png</logo>
-    <icon>https://diss.one/favicon.ico</icon>
+    <logo>https://aoki.one/images/avatar.png</logo>
+    <icon>https://aoki.one/favicon.ico</icon>
     <rights>All rights reserved 2023, 表酱紫 </rights>
     <entry>
         <title type="html"><![CDATA[高效能人士的七个习惯]]></title>
-        <id>https://diss.one/gao-xiao-neng-ren-shi-de-qi-ge-xi-guan/</id>
-        <link href="https://diss.one/gao-xiao-neng-ren-shi-de-qi-ge-xi-guan/">
+        <id>https://aoki.one/gao-xiao-neng-ren-shi-de-qi-ge-xi-guan/</id>
+        <link href="https://aoki.one/gao-xiao-neng-ren-shi-de-qi-ge-xi-guan/">
         </link>
         <updated>2023-02-16T01:46:33.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[qbittorrent : 10分钟搭建你专属的下载神器 ]]></title>
-        <id>https://diss.one/qbittorrent-10-fen-zhong-da-jian-ni-zhuan-shu-de-xia-zai-shen-qi/</id>
-        <link href="https://diss.one/qbittorrent-10-fen-zhong-da-jian-ni-zhuan-shu-de-xia-zai-shen-qi/">
+        <id>https://aoki.one/qbittorrent-10-fen-zhong-da-jian-ni-zhuan-shu-de-xia-zai-shen-qi/</id>
+        <link href="https://aoki.one/qbittorrent-10-fen-zhong-da-jian-ni-zhuan-shu-de-xia-zai-shen-qi/">
         </link>
         <updated>2023-01-18T07:08:50.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[一个优秀的直播录制工具]]></title>
-        <id>https://diss.one/yi-ge-you-xiu-de-zhi-bo-lu-zhi-gong-ju/</id>
-        <link href="https://diss.one/yi-ge-you-xiu-de-zhi-bo-lu-zhi-gong-ju/">
+        <id>https://aoki.one/yi-ge-you-xiu-de-zhi-bo-lu-zhi-gong-ju/</id>
+        <link href="https://aoki.one/yi-ge-you-xiu-de-zhi-bo-lu-zhi-gong-ju/">
         </link>
         <updated>2023-01-18T01:16:17.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Buyvm增加存储块及配置指南]]></title>
-        <id>https://diss.one/buyvm-pei-zhi-zhi-nan/</id>
-        <link href="https://diss.one/buyvm-pei-zhi-zhi-nan/">
+        <id>https://aoki.one/buyvm-pei-zhi-zhi-nan/</id>
+        <link href="https://aoki.one/buyvm-pei-zhi-zhi-nan/">
         </link>
         <updated>2023-01-17T09:11:49.000Z</updated>
     </entry>
